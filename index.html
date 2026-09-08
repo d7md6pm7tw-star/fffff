@@ -1,1 +1,61 @@
-fffff
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё первое TG App</title>
+    <!-- Подключаем официальный скрипт Telegram Web Apps API -->
+    <script src="https://telegram.org"></script>
+    <style>
+        /* Стили автоматически подстроятся под цвета темы пользователя в Telegram */
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background-color: var(--tg-theme-bg-color, #ffffff); 
+            color: var(--tg-theme-text-color, #000000); 
+            padding: 20px; 
+            margin: 0;
+        }
+        h1 {
+            margin-top: 40px;
+        }
+        button { 
+            margin-top: 20px;
+            padding: 12px 24px; 
+            font-size: 16px; 
+            font-weight: bold;
+            background-color: var(--tg-theme-button-color, #0088cc); 
+            color: var(--tg-theme-button-text-color, #ffffff); 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: opacity 0.2s;
+        }
+        button:active {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Привет, <span id="username">Пользователь</span>!</h1>
+    <p>Это бесплатное Telegram Mini App, созданное своими руками.</p>
+    <button id="close-btn">Закрыть приложение</button>
+
+    <script>
+        // Инициализируем Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // Сообщаем Telegram, что приложение полностью загрузилось и готово к работе
+
+        // Проверяем, открыто ли приложение внутри Telegram, и берем имя пользователя
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+        }
+
+        // Логика для кнопки закрытия приложения
+        document.getElementById('close-btn').addEventListener('click', () => {
+            tg.close(); // Метод Telegram API, который закрывает окно Mini App
+        });
+    </script>
+</body>
+</html>
+
